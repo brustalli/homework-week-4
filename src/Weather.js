@@ -6,11 +6,9 @@ import "./Weather.css";
 
 export default function Weather() {
   const [city, setCity] = useState(" ");
-  const [loaded, setLoaded] = useState(true);
   const [weather, setWeather] = useState({});
 
   function displayWeather(response) {
-    setLoaded(true);
     setWeather({
       temperature: response.data.main.temp,
       wind: response.data.wind.speed,
@@ -37,23 +35,27 @@ export default function Weather() {
         placeholder="Enter a city here"
         onChange={updateCity}
       />
-      <input type="submit" value="Search" />
-      <Button variant="primary">Primary</Button>{" "}
+      <Button type="submit" variant="primary">
+        Search
+      </Button>
     </form>
   );
 
-  if (loaded) {
+  let defaultCity = (
+    <div>
+      <p>Rio de Janeiro</p>
+      <ul>
+        <li>Temperature: 19°C</li>
+        <li>Wind:5 km/h</li>
+        <li>Humidity: 20%</li>
+      </ul>
+    </div>
+  );
+  if (city) {
     return (
       <div>
         {form}
-        <ul>
-          <li>Temperature: {Math.round(weather.temperature)}°C</li>
-          <li>Wind: {weather.wind}km/h</li>
-          <li>Humidity: {weather.humidity}%</li>
-          <li>
-            <img src={weather.icon} alt="Weather Icon" />
-          </li>
-        </ul>
+        {defaultCity}
       </div>
     );
   } else {
